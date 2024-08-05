@@ -54,7 +54,7 @@ def train_model():
     # Load models
     facenet = InceptionResnetV1(pretrained='vggface2').eval()
     recognition_model = FaceRecognitionModel(embedding_size=512, num_classes=len(dataset.classes))
-    
+
     # Define loss and optimizer
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(recognition_model.parameters(), lr=0.001)
@@ -63,10 +63,19 @@ def train_model():
     num_epochs = 10
     for epoch in range(num_epochs):
         for images, labels in dataloader:
+            # Move tensors to GPU if available
+            images, labels = images.to('cuda'), labels.to('cuda')
+            facenet = facenet.to('cuda')
+            recognition_model = recognition_model.to('cuda')
+            
+            # Extract face embeddings
             embeddings = facenet(images)
+            
+            # Forward pass
             outputs = recognition_model(embeddings)
             loss = criterion(outputs, labels)
 
+            # Backward and optimize
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
