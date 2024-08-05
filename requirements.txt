@@ -1,0 +1,8 @@
+flask
+opencv-python
+mtcnn
+facenet-pytorch
+torch
+numpy
+pillow
+gunicorn
