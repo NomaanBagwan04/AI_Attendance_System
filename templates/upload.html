@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Attendance Image</title>
+</head>
+<body>
+    <h1>Upload Attendance Image</h1>
+    <form action="{{ url_for('views.upload_image') }}" method="post" enctype="multipart/form-data">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" required><br><br>
+        <label for="class">Class:</label>
+        <select id="class" name="class" required>
+            <option value="FY">FY</option>
+            <option value="SY">SY</option>
+            <option value="TY">TY</option>
+            <option value="BTech">BTech</option>
+        </select><br><br>
+        <input type="file" name="attendance_image" required />
+        <button type="submit">Upload</button>
+    </form>
+    <a href="{{ url_for('views.index') }}">Back to Dashboard</a>
+</body>
+</html>
